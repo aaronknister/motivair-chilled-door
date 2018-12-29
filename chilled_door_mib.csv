@@ -1,0 +1,86 @@
+#$Id: chilled_door_mib.csv,v 1.4 2018/05/02 05:04:02 aknister Exp aknister $,,,,,
+oidName,unit,readwrite,current,description,pcoVarType,pcoVarId
+supplyAirTemp,IntegerTenths,read-only,current,Air Outlet Temp (supply),chilledDoorAnalogVariable,1
+supplyAirTempSetpoint,IntegerTenths,read-write,current,Air Outlet Temp (supply) set point,chilledDoorAnalogVariable,2
+supplyAirTempControlBand,IntegerTenths,read-write,current,Air Output Control Band set point,chilledDoorAnalogVariable,3
+fanOutputPercentage,IntegerTenths,read-only,current,0-100% output to the fans,chilledDoorAnalogVariable,4
+returnWaterCoilTemp,IntegerTenths,read-only,current,Return water coil temperature,chilledDoorAnalogVariable,5
+valveOpenPercentage,IntegerTenths,read-only,current,0-100% output to the valve,chilledDoorAnalogVariable,8
+roomTemp,IntegerTenths,read-only,current,Room Temperature,chilledDoorAnalogVariable,9
+calibrateB1Probe,IntegerTenths,read-write,current,Calibrate B1 Air out probe,chilledDoorAnalogVariable,10
+calibrateB3Probe,IntegerTenths,read-write,current,Calibrate B3 water probe,chilledDoorAnalogVariable,11
+calibrateB2Probe,IntegerTenths,read-write,current,Calibrate B2 water/room probe (depending on generation),chilledDoorAnalogVariable,12
+roomTempHighAlarmSetpoint,IntegerTenths,read-write,current,High room temperature (above setpoint) alarm set point,chilledDoorAnalogVariable,13
+roomTempLowAlarmSetpoint,IntegerTenths,read-write,current,Low room temperature (below setpoint) alarm set point,chilledDoorAnalogVariable,14
+calibrateB4Probe,IntegerTenths,read-write,current,Calibrate B4 server probe,chilledDoorAnalogVariable,15
+serverOutletAirTemp,IntegerTenths,read-only,current,Server output air temperature,chilledDoorAnalogVariable,16
+serverOutletAirTempAlarmSetpoint,IntegerTenths,read-write,current,Server output air temperature alarm setpoint,chilledDoorAnalogVariable,17
+injectInletTemp,IntegerTenths,read-only,current,Injection inlet temperature probe,chilledDoorAnalogVariable,19
+injectInletLowLimitSetpoint,IntegerTenths,read-write,current,Injection inlet low limit setpoint,chilledDoorAnalogVariable,20
+calibrateB6Probe,IntegerTenths,read-write,current,Calibrate B6 limit probe,chilledDoorAnalogVariable,22
+calibratePressureProbe,IntegerTenths,read-write,current,Calibrate Pressure probe (B2P/B3P depending on model/generation),chilledDoorAnalogVariable,23
+fanPressureMaxSetpoint,IntegerTenths,read-write,current,Max fan pressure setpoint,chilledDoorAnalogVariable,26
+fanPressureMinSetpoint,IntegerTenths,read-write,current,Min fan pressure setpoint,chilledDoorAnalogVariable,27
+fanPressure,IntegerTenths,read-only,current,Fan pressure,chilledDoorAnalogVariable,28
+serverOutletAirTempSetpoint,IntegerTenths,read-write,current,Server outlet air temperature setpoint,chilledDoorAnalogVariable,31
+serverOutletAirTempDiffSetpoint,IntegerTenths,read-write,current,Server outlet air temperature differential setpoint,chilledDoorAnalogVariable,32
+supplyAirTempLowAlarmSetpoint,IntegerTenths,read-write,current,Air output low temp alarm setpoint,chilledDoorAnalogVariable,33
+fan1AlarmEnable,Integer,read-write,current,Fan 1 Alarm Enable,chilledDoorDigitalVariable,7
+fan2AlarmEnable,Integer,read-write,current,Fan 2 Alarm Enable,chilledDoorDigitalVariable,8
+fan3AlarmEnable,Integer,read-write,current,Fan 3 Alarm Enable,chilledDoorDigitalVariable,9
+fan4AlarmEnable,Integer,read-write,current,Fan 4 Alarm Enable,chilledDoorDigitalVariable,10
+fan5AlarmEnable,Integer,read-write,current,Fan 5 Alarm Enable,chilledDoorDigitalVariable,11
+supplyAirTempHighAlarm,Integer,read-only,current,Air output (supply air) high temp alarm,chilledDoorDigitalVariable,13
+returnWaterCoilHighTempAlarm,Integer,read-only,current,Return Water Coil High Temperature Alarm,chilledDoorDigitalVariable,14
+returnWaterCoilLowTempAlarm,Integer,read-only,current,Return Water Coil Low Temperature Alarm,chilledDoorDigitalVariable,15
+onOff,Integer,read-only,current,Unit On/Off State,chilledDoorDigitalVariable,16
+powerRelayStatus,Integer,read-only,current,"Power relay status (0=A, 1=B)",chilledDoorDigitalVariable,17
+wdsAlarmEnable,Integer,read-write,current,Enable WDS alarm,chilledDoorDigitalVariable,19
+alarmReset,Integer,read-write,current,Reset Alarms,chilledDoorDigitalVariable,20
+wdsAlarm,Integer,read-only,current,Reset Alarms,chilledDoorDigitalVariable,21
+generalAlarm,Integer,read-only,current,General Alarm,chilledDoorDigitalVariable,22
+clockBoardAlarm,Integer,read-only,current,Clock Board Alarm,chilledDoorDigitalVariable,23
+roomTempHighAlarm,Integer,read-only,current,Room temp (inlet) high temp alarm,chilledDoorDigitalVariable,24
+roomTempLowAlarm,Integer,read-only,current,Room Temp Low Alarm,chilledDoorDigitalVariable,25
+b1ProbeAlarm,Integer,read-only,current,B1 Probe Alarm,chilledDoorDigitalVariable,26
+b2ProbeAlarm,Integer,read-only,current,B2 Probe Alarm,chilledDoorDigitalVariable,27
+b3ProbeAlarm,Integer,read-only,current,B3 Probe Alarm,chilledDoorDigitalVariable,28
+fan1Alarm,Integer,read-only,current,Fan 1 Alarm ,chilledDoorDigitalVariable,29
+fan2Alarm,Integer,read-only,current,Fan 2 Alarm ,chilledDoorDigitalVariable,30
+fan3Alarm,Integer,read-only,current,Fan 3 Alarm ,chilledDoorDigitalVariable,31
+fan4Alarm,Integer,read-only,current,Fan 4 Alarm ,chilledDoorDigitalVariable,32
+fan5Alarm,Integer,read-only,current,Fan 5 Alarm ,chilledDoorDigitalVariable,33
+wdsAlarmCloseValve,Integer,read-write,current,Close valve on WDS alarm,chilledDoorDigitalVariable,35
+serverOutletAirTempHighAlarm,Integer,read-only,current,Server outlet air temp high alarm,chilledDoorDigitalVariable,36
+b3pProbeAlarm,Integer,read-only,current,B3P Probe Alarm,chilledDoorDigitalVariable,38
+fanPressureHighAlarm,Integer,read-only,current,High Fan Pressure Alarm,chilledDoorDigitalVariable,39
+b4ProbeAlarm,Integer,read-only,current,B4 Probe (server out temp) Alarm,chilledDoorDigitalVariable,57
+supplyAirTempLowAlarm,Integer,read-only,current,Low Supply Air Temp,chilledDoorDigitalVariable,58
+fanSpeedMin,Integer,read-write,current,Minimum fan speed (percentage),chilledDoorIntegerVariable,1
+fanAlarmDelay,Integer,read-write,current,Fan alarm delay (seconds),chilledDoorIntegerVariable,2
+valveOpenMin,Integer,read-write,current,Minimum valve open (percentage),chilledDoorIntegerVariable,5
+supplyAirTempDiffHighAlarmSetpoint,Integer,read-write,current,High supply/air output temp alarm diff setpoint,chilledDoorIntegerVariable,6
+supplyAirTempHighAlarmDelay,Integer,read-write,current,High air temp alarm delay (seconds),chilledDoorIntegerVariable,7
+returnWaterCoilTempDiffHighAlarmSetpoint,Integer,read-write,current,Return Water Coil Temperature Differential Alarm Setpoint,chilledDoorIntegerVariable,8
+returnWaterCoilTempHighAlarmDelay,Integer,read-write,current,Return Water Coil Temperature Alarm Delay (seconds),chilledDoorIntegerVariable,9
+returnWaterCoilTempLowAlarmSetpoint,Integer,read-write,current,Return Water Coil Low Temperature Alarm Setpoint,chilledDoorIntegerVariable,10
+returnWaterCoilTempLowAlarmDelay,Integer,read-write,current,Return Water Coil Low Temperature Alarm Delay (seconds),chilledDoorIntegerVariable,11
+roomTempHighAlarmDelay,Integer,read-write,current,High room temperature alarm delay,chilledDoorIntegerVariable,12
+roomTempLowAlarmDelay,Integer,read-write,current,Low room temperature alarm delay,chilledDoorIntegerVariable,13
+fan1RPM,Integer,read-write,current,Fan 1 RPM,chilledDoorIntegerVariable,14
+fan2RPM,Integer,read-write,current,Fan 2 RPM,chilledDoorIntegerVariable,15
+fan3RPM,Integer,read-write,current,Fan 3 RPM,chilledDoorIntegerVariable,16
+fan4RPM,Integer,read-write,current,Fan 4 RPM,chilledDoorIntegerVariable,17
+fan5RPM,Integer,read-write,current,Fan 5 RPM,chilledDoorIntegerVariable,18
+serverOutletAirTempHighAlarmDelay,Integer,read-write,current,High server outlet temperature alarm delay (seconds),chilledDoorIntegerVariable,19
+fanPressureTimeDelay,Integer,read-write,current,fan pressure time delay,chilledDoorIntegerVariable,20
+fanPressureAlarmDelay,Integer,read-write,current,fan pressure alarm time delay,chilledDoorIntegerVariable,22
+supplyAirTempLowAlarmDelay,Integer,read-write,current,fan pressure alarm delay,chilledDoorIntegerVariable,23
+fanPressureProbeAlarmDelay,Integer,read-write,current,fan pressure probe alarm delay,chilledDoorIntegerVariable,24
+fanSpeedMax,Integer,read-write,current,max fan speed (percentage),chilledDoorIntegerVariable,25
+valveOpenMax,Integer,read-write,current,valve max open percentage,chilledDoorIntegerVariable,26
+clockDay,Integer,read-write,current,clock day,chilledDoorIntegerVariable,30
+clockMonth,Integer,read-write,current,clock month,chilledDoorIntegerVariable,31
+clockYear,Integer,read-write,current,clock year,chilledDoorIntegerVariable,32
+clockHour,Integer,read-write,current,clock hour,chilledDoorIntegerVariable,33
+clockMinute,Integer,read-write,current,clock minute,chilledDoorIntegerVariable,34

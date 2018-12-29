@@ -1,0 +1,727 @@
+CHILLED-DOOR-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+	MODULE-IDENTITY, OBJECT-TYPE, NOTIFICATION-TYPE     FROM SNMPv2-SMI
+	enterprises, Integer32, Unsigned32                  FROM SNMPv2-SMI
+	MODULE-COMPLIANCE, OBJECT-GROUP, NOTIFICATION-GROUP FROM SNMPv2-CONF
+	TEXTUAL-CONVENTION, DisplayString                   FROM SNMPv2-TC;
+
+chilledDoor MODULE-IDENTITY
+--for vim :read !date -u +\%Y\%m\%d\%H\%M\%SZ
+	LAST-UPDATED "201803301311Z"
+	ORGANIZATION "Motivair Corp"
+	CONTACT-INFO "aaron.s.knister@nasa.gov"
+	DESCRIPTION  "STuff. With things"
+
+
+	::= { enterprises 9839 }
+
+IntegerTenths ::= TEXTUAL-CONVENTION
+	DISPLAY-HINT	"d-1"
+	STATUS		current
+	DESCRIPTION	"Integer with one decimal place"
+	SYNTAX 		INTEGER
+
+
+pcoCommunicationStateEnumeration ::= TEXTUAL-CONVENTION
+	STATUS	current
+	DESCRIPTION
+		"Communication states of the pCOWeb device with the pCO controller"
+	SYNTAX	INTEGER {
+			offline(0),          -- operating properly
+			communicationAttempt(1),        -- disabled
+			online(2),          -- purged
+		}
+
+pcoCommunicationState OBJECT-TYPE
+		SYNTAX		pcoCommunicationStateEnumeration
+		MAX-ACCESS	read-only
+		STATUS		current
+		DESCRIPTION
+			"Communication status of the pCOWeb device with the pCO controller"
+		::= { chilledDoor 2 0 10 1 0 }
+
+pcoCommunicationAttempts OBJECT-TYPE
+		SYNTAX		Integer
+		MAX-ACCESS	read-only
+		STATUS		current
+		DESCRIPTION
+			"Number of communication attmps with the pCO controller"
+		::= { chilledDoor 2 0 11 1 0 }
+
+chilledDoorDigitalVariable	OBJECT IDENTIFIER	::= { chilledDoor 2 1 1 }
+chilledDoorAnalogVariable	OBJECT IDENTIFIER ::= { chilledDoor 2 1 2 }
+chilledDoorIntegerVariable	OBJECT IDENTIFIER	::= { chilledDoor 2 1 3 }
+supplyAirTemp OBJECT-TYPE
+                SYNTAX          IntegerTenths
+                MAX-ACCESS      read-only
+                STATUS          current
+                DESCRIPTION
+                        "Air Outlet Temp (supply)"
+                ::= { chilledDoorAnalogVariable 1 }
+
+supplyAirTempSetpoint OBJECT-TYPE
+                SYNTAX          IntegerTenths
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Air Outlet Temp (supply) set point"
+                ::= { chilledDoorAnalogVariable 2 }
+
+supplyAirTempControlBand OBJECT-TYPE
+                SYNTAX          IntegerTenths
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Air Output Control Band set point"
+                ::= { chilledDoorAnalogVariable 3 }
+
+fanOutputPercentage OBJECT-TYPE
+                SYNTAX          IntegerTenths
+                MAX-ACCESS      read-only
+                STATUS          current
+                DESCRIPTION
+                        "0-100% output to the fans"
+                ::= { chilledDoorAnalogVariable 4 }
+
+returnWaterCoilTemp OBJECT-TYPE
+                SYNTAX          IntegerTenths
+                MAX-ACCESS      read-only
+                STATUS          current
+                DESCRIPTION
+                        "Return water coil temperature"
+                ::= { chilledDoorAnalogVariable 5 }
+
+valveOpenPercentage OBJECT-TYPE
+                SYNTAX          IntegerTenths
+                MAX-ACCESS      read-only
+                STATUS          current
+                DESCRIPTION
+                        "0-100% output to the valve"
+                ::= { chilledDoorAnalogVariable 8 }
+
+roomTemp OBJECT-TYPE
+                SYNTAX          IntegerTenths
+                MAX-ACCESS      read-only
+                STATUS          current
+                DESCRIPTION
+                        "Room Temperature"
+                ::= { chilledDoorAnalogVariable 9 }
+
+calibrateB1Probe OBJECT-TYPE
+                SYNTAX          IntegerTenths
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Calibrate B1 Air out probe"
+                ::= { chilledDoorAnalogVariable 10 }
+
+calibrateB3Probe OBJECT-TYPE
+                SYNTAX          IntegerTenths
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Calibrate B3 water probe"
+                ::= { chilledDoorAnalogVariable 11 }
+
+calibrateB2Probe OBJECT-TYPE
+                SYNTAX          IntegerTenths
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Calibrate B2 water/room probe (depending on generation)"
+                ::= { chilledDoorAnalogVariable 12 }
+
+roomTempHighAlarmSetpoint OBJECT-TYPE
+                SYNTAX          IntegerTenths
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "High room temperature (above setpoint) alarm set point"
+                ::= { chilledDoorAnalogVariable 13 }
+
+roomTempLowAlarmSetpoint OBJECT-TYPE
+                SYNTAX          IntegerTenths
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Low room temperature (below setpoint) alarm set point"
+                ::= { chilledDoorAnalogVariable 14 }
+
+calibrateB4Probe OBJECT-TYPE
+                SYNTAX          IntegerTenths
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Calibrate B4 server probe"
+                ::= { chilledDoorAnalogVariable 15 }
+
+serverOutletAirTemp OBJECT-TYPE
+                SYNTAX          IntegerTenths
+                MAX-ACCESS      read-only
+                STATUS          current
+                DESCRIPTION
+                        "Server output air temperature"
+                ::= { chilledDoorAnalogVariable 16 }
+
+serverOutletAirTempAlarmSetpoint OBJECT-TYPE
+                SYNTAX          IntegerTenths
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Server output air temperature alarm setpoint"
+                ::= { chilledDoorAnalogVariable 17 }
+
+injectInletTemp OBJECT-TYPE
+                SYNTAX          IntegerTenths
+                MAX-ACCESS      read-only
+                STATUS          current
+                DESCRIPTION
+                        "Injection inlet temperature probe"
+                ::= { chilledDoorAnalogVariable 19 }
+
+injectInletLowLimitSetpoint OBJECT-TYPE
+                SYNTAX          IntegerTenths
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Injection inlet low limit setpoint"
+                ::= { chilledDoorAnalogVariable 20 }
+
+calibrateB6Probe OBJECT-TYPE
+                SYNTAX          IntegerTenths
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Calibrate B6 limit probe"
+                ::= { chilledDoorAnalogVariable 22 }
+
+calibratePressureProbe OBJECT-TYPE
+                SYNTAX          IntegerTenths
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Calibrate Pressure probe (B2P/B3P depending on model/generation)"
+                ::= { chilledDoorAnalogVariable 23 }
+
+fanPressureMaxSetpoint OBJECT-TYPE
+                SYNTAX          IntegerTenths
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Max fan pressure setpoint"
+                ::= { chilledDoorAnalogVariable 26 }
+
+fanPressureMinSetpoint OBJECT-TYPE
+                SYNTAX          IntegerTenths
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Min fan pressure setpoint"
+                ::= { chilledDoorAnalogVariable 27 }
+
+fanPressure OBJECT-TYPE
+                SYNTAX          IntegerTenths
+                MAX-ACCESS      read-only
+                STATUS          current
+                DESCRIPTION
+                        "Fan pressure"
+                ::= { chilledDoorAnalogVariable 28 }
+
+serverOutletAirTempSetpoint OBJECT-TYPE
+                SYNTAX          IntegerTenths
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Server outlet air temperature setpoint"
+                ::= { chilledDoorAnalogVariable 31 }
+
+serverOutletAirTempDiffSetpoint OBJECT-TYPE
+                SYNTAX          IntegerTenths
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Server outlet air temperature differential setpoint"
+                ::= { chilledDoorAnalogVariable 32 }
+
+supplyAirTempLowAlarmSetpoint OBJECT-TYPE
+                SYNTAX          IntegerTenths
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Air output low temp alarm setpoint"
+                ::= { chilledDoorAnalogVariable 33 }
+
+fan1AlarmEnable OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Fan 1 Alarm Enable"
+                ::= { chilledDoorDigitalVariable 7 }
+
+fan2AlarmEnable OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Fan 2 Alarm Enable"
+                ::= { chilledDoorDigitalVariable 8 }
+
+fan3AlarmEnable OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Fan 3 Alarm Enable"
+                ::= { chilledDoorDigitalVariable 9 }
+
+fan4AlarmEnable OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Fan 4 Alarm Enable"
+                ::= { chilledDoorDigitalVariable 10 }
+
+fan5AlarmEnable OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Fan 5 Alarm Enable"
+                ::= { chilledDoorDigitalVariable 11 }
+
+supplyAirTempHighAlarm OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-only
+                STATUS          current
+                DESCRIPTION
+                        "Air output (supply air) high temp alarm"
+                ::= { chilledDoorDigitalVariable 13 }
+
+returnWaterCoilHighTempAlarm OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-only
+                STATUS          current
+                DESCRIPTION
+                        "Return Water Coil High Temperature Alarm"
+                ::= { chilledDoorDigitalVariable 14 }
+
+returnWaterCoilLowTempAlarm OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-only
+                STATUS          current
+                DESCRIPTION
+                        "Return Water Coil Low Temperature Alarm"
+                ::= { chilledDoorDigitalVariable 15 }
+
+onOff OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-only
+                STATUS          current
+                DESCRIPTION
+                        "Unit On/Off State"
+                ::= { chilledDoorDigitalVariable 16 }
+
+powerRelayStatus OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-only
+                STATUS          current
+                DESCRIPTION
+                        "Power relay status (0=A, 1=B)"
+                ::= { chilledDoorDigitalVariable 17 }
+
+wdsAlarmEnable OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Enable WDS alarm"
+                ::= { chilledDoorDigitalVariable 19 }
+
+alarmReset OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Reset Alarms"
+                ::= { chilledDoorDigitalVariable 20 }
+
+wdsAlarm OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-only
+                STATUS          current
+                DESCRIPTION
+                        "Reset Alarms"
+                ::= { chilledDoorDigitalVariable 21 }
+
+generalAlarm OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-only
+                STATUS          current
+                DESCRIPTION
+                        "General Alarm"
+                ::= { chilledDoorDigitalVariable 22 }
+
+clockBoardAlarm OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-only
+                STATUS          current
+                DESCRIPTION
+                        "Clock Board Alarm"
+                ::= { chilledDoorDigitalVariable 23 }
+
+roomTempHighAlarm OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-only
+                STATUS          current
+                DESCRIPTION
+                        "Room temp (inlet) high temp alarm"
+                ::= { chilledDoorDigitalVariable 24 }
+
+roomTempLowAlarm OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-only
+                STATUS          current
+                DESCRIPTION
+                        "Room Temp Low Alarm"
+                ::= { chilledDoorDigitalVariable 25 }
+
+b1ProbeAlarm OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-only
+                STATUS          current
+                DESCRIPTION
+                        "B1 Probe Alarm"
+                ::= { chilledDoorDigitalVariable 26 }
+
+b2ProbeAlarm OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-only
+                STATUS          current
+                DESCRIPTION
+                        "B2 Probe Alarm"
+                ::= { chilledDoorDigitalVariable 27 }
+
+b3ProbeAlarm OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-only
+                STATUS          current
+                DESCRIPTION
+                        "B3 Probe Alarm"
+                ::= { chilledDoorDigitalVariable 28 }
+
+fan1Alarm OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-only
+                STATUS          current
+                DESCRIPTION
+                        "Fan 1 Alarm "
+                ::= { chilledDoorDigitalVariable 29 }
+
+fan2Alarm OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-only
+                STATUS          current
+                DESCRIPTION
+                        "Fan 2 Alarm "
+                ::= { chilledDoorDigitalVariable 30 }
+
+fan3Alarm OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-only
+                STATUS          current
+                DESCRIPTION
+                        "Fan 3 Alarm "
+                ::= { chilledDoorDigitalVariable 31 }
+
+fan4Alarm OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-only
+                STATUS          current
+                DESCRIPTION
+                        "Fan 4 Alarm "
+                ::= { chilledDoorDigitalVariable 32 }
+
+fan5Alarm OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-only
+                STATUS          current
+                DESCRIPTION
+                        "Fan 5 Alarm "
+                ::= { chilledDoorDigitalVariable 33 }
+
+wdsAlarmCloseValve OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Close valve on WDS alarm"
+                ::= { chilledDoorDigitalVariable 35 }
+
+serverOutletAirTempHighAlarm OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-only
+                STATUS          current
+                DESCRIPTION
+                        "Server outlet air temp high alarm"
+                ::= { chilledDoorDigitalVariable 36 }
+
+b3pProbeAlarm OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-only
+                STATUS          current
+                DESCRIPTION
+                        "B3P Probe Alarm"
+                ::= { chilledDoorDigitalVariable 38 }
+
+fanPressureHighAlarm OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-only
+                STATUS          current
+                DESCRIPTION
+                        "High Fan Pressure Alarm"
+                ::= { chilledDoorDigitalVariable 39 }
+
+b4ProbeAlarm OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-only
+                STATUS          current
+                DESCRIPTION
+                        "B4 Probe (server out temp) Alarm"
+                ::= { chilledDoorDigitalVariable 57 }
+
+supplyAirTempLowAlarm OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-only
+                STATUS          current
+                DESCRIPTION
+                        "Low Supply Air Temp"
+                ::= { chilledDoorDigitalVariable 58 }
+
+fanSpeedMin OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Minimum fan speed (percentage)"
+                ::= { chilledDoorIntegerVariable 1 }
+
+fanAlarmDelay OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Fan alarm delay (seconds)"
+                ::= { chilledDoorIntegerVariable 2 }
+
+valveOpenMin OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Minimum valve open (percentage)"
+                ::= { chilledDoorIntegerVariable 5 }
+
+supplyAirTempDiffHighAlarmSetpoint OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "High supply/air output temp alarm diff setpoint"
+                ::= { chilledDoorIntegerVariable 6 }
+
+supplyAirTempHighAlarmDelay OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "High air temp alarm delay (seconds)"
+                ::= { chilledDoorIntegerVariable 7 }
+
+returnWaterCoilTempDiffHighAlarmSetpoint OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Return Water Coil Temperature Differential Alarm Setpoint"
+                ::= { chilledDoorIntegerVariable 8 }
+
+returnWaterCoilTempHighAlarmDelay OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Return Water Coil Temperature Alarm Delay (seconds)"
+                ::= { chilledDoorIntegerVariable 9 }
+
+returnWaterCoilTempLowAlarmSetpoint OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Return Water Coil Low Temperature Alarm Setpoint"
+                ::= { chilledDoorIntegerVariable 10 }
+
+returnWaterCoilTempLowAlarmDelay OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Return Water Coil Low Temperature Alarm Delay (seconds)"
+                ::= { chilledDoorIntegerVariable 11 }
+
+roomTempHighAlarmDelay OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "High room temperature alarm delay"
+                ::= { chilledDoorIntegerVariable 12 }
+
+roomTempLowAlarmDelay OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Low room temperature alarm delay"
+                ::= { chilledDoorIntegerVariable 13 }
+
+fan1RPM OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Fan 1 RPM"
+                ::= { chilledDoorIntegerVariable 14 }
+
+fan2RPM OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Fan 2 RPM"
+                ::= { chilledDoorIntegerVariable 15 }
+
+fan3RPM OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Fan 3 RPM"
+                ::= { chilledDoorIntegerVariable 16 }
+
+fan4RPM OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Fan 4 RPM"
+                ::= { chilledDoorIntegerVariable 17 }
+
+fan5RPM OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "Fan 5 RPM"
+                ::= { chilledDoorIntegerVariable 18 }
+
+serverOutletAirTempHighAlarmDelay OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "High server outlet temperature alarm delay (seconds)"
+                ::= { chilledDoorIntegerVariable 19 }
+
+fanPressureTimeDelay OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "fan pressure time delay"
+                ::= { chilledDoorIntegerVariable 20 }
+
+fanPressureAlarmDelay OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "fan pressure alarm time delay"
+                ::= { chilledDoorIntegerVariable 22 }
+
+supplyAirTempLowAlarmDelay OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "fan pressure alarm delay"
+                ::= { chilledDoorIntegerVariable 23 }
+
+fanPressureProbeAlarmDelay OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "fan pressure probe alarm delay"
+                ::= { chilledDoorIntegerVariable 24 }
+
+fanSpeedMax OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "max fan speed (percentage)"
+                ::= { chilledDoorIntegerVariable 25 }
+
+valveOpenMax OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "valve max open percentage"
+                ::= { chilledDoorIntegerVariable 26 }
+
+clockDay OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "clock day"
+                ::= { chilledDoorIntegerVariable 30 }
+
+clockMonth OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "clock month"
+                ::= { chilledDoorIntegerVariable 31 }
+
+clockYear OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "clock year"
+                ::= { chilledDoorIntegerVariable 32 }
+
+clockHour OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "clock hour"
+                ::= { chilledDoorIntegerVariable 33 }
+
+clockMinute OBJECT-TYPE
+                SYNTAX          Integer
+                MAX-ACCESS      read-write
+                STATUS          current
+                DESCRIPTION
+                        "clock minute"
+                ::= { chilledDoorIntegerVariable 34 }
+
+END

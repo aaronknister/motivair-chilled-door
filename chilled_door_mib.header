@@ -1,0 +1,54 @@
+CHILLED-DOOR-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+	MODULE-IDENTITY, OBJECT-TYPE, NOTIFICATION-TYPE     FROM SNMPv2-SMI
+	enterprises, Integer32, Unsigned32                  FROM SNMPv2-SMI
+	MODULE-COMPLIANCE, OBJECT-GROUP, NOTIFICATION-GROUP FROM SNMPv2-CONF
+	TEXTUAL-CONVENTION, DisplayString                   FROM SNMPv2-TC;
+
+chilledDoor MODULE-IDENTITY
+--for vim :read !date -u +\%Y\%m\%d\%H\%M\%SZ
+	LAST-UPDATED "201803301311Z"
+	ORGANIZATION "Motivair Corp"
+	CONTACT-INFO "aaron.s.knister@nasa.gov"
+	DESCRIPTION  "STuff. With things"
+
+
+	::= { enterprises 9839 }
+
+IntegerTenths ::= TEXTUAL-CONVENTION
+	DISPLAY-HINT	"d-1"
+	STATUS		current
+	DESCRIPTION	"Integer with one decimal place"
+	SYNTAX 		INTEGER
+
+
+pcoCommunicationStateEnumeration ::= TEXTUAL-CONVENTION
+	STATUS	current
+	DESCRIPTION
+		"Communication states of the pCOWeb device with the pCO controller"
+	SYNTAX	INTEGER {
+			offline(0),          -- operating properly
+			communicationAttempt(1),        -- disabled
+			online(2),          -- purged
+		}
+
+pcoCommunicationState OBJECT-TYPE
+		SYNTAX		pcoCommunicationStateEnumeration
+		MAX-ACCESS	read-only
+		STATUS		current
+		DESCRIPTION
+			"Communication status of the pCOWeb device with the pCO controller"
+		::= { chilledDoor 2 0 10 1 0 }
+
+pcoCommunicationAttempts OBJECT-TYPE
+		SYNTAX		Integer
+		MAX-ACCESS	read-only
+		STATUS		current
+		DESCRIPTION
+			"Number of communication attmps with the pCO controller"
+		::= { chilledDoor 2 0 11 1 0 }
+
+chilledDoorDigitalVariable	OBJECT IDENTIFIER	::= { chilledDoor 2 1 1 }
+chilledDoorAnalogVariable	OBJECT IDENTIFIER ::= { chilledDoor 2 1 2 }
+chilledDoorIntegerVariable	OBJECT IDENTIFIER	::= { chilledDoor 2 1 3 }
